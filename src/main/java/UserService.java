@@ -11,9 +11,9 @@ import java.util.List;
 
 public class UserService {
 
-    private final String BASE_URL = "https://jsonplaceholder.typicode.com/users";
-    private final HttpClient client = HttpClient.newHttpClient();
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/users";
+    private static final HttpClient client = HttpClient.newHttpClient();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public User createUser(User user) throws IOException, InterruptedException {
         String json = gson.toJson(user);
@@ -46,8 +46,13 @@ public class UserService {
                 .uri(URI.create(BASE_URL + "/" + id))
                 .DELETE()
                 .build();
+
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.statusCode() / 100 == 2;
+
+        System.out.println("DELETE status: " + response.statusCode());
+        System.out.println("Response body: " + response.body());
+
+        return response.statusCode() == 200;
     }
 
     public List<User> getAllUsers() throws IOException, InterruptedException {

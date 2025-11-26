@@ -16,7 +16,7 @@ public class Main {
         System.out.println("ID 1: " + user1.getName());
 
         List<User> byUsername = service.getUserByUsername("Bret");
-        System.out.println("По username Bret: " + byUsername.getFirst().getName());
+        System.out.println("По username Bret: " + byUsername.get(0).getName());
 
         created.setEmail("new@example.com");
         User updated = service.updateUser(created);
